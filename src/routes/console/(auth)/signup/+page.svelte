@@ -2,8 +2,15 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { ApiError } from '$lib/api/client';
+	import {
+		GoogleSignInCancelled,
+		isGoogleConfigured,
+		requestGoogleAuthCode
+	} from '$lib/auth/google-sdk';
 	import CommonGridShape from '$lib/components/ui/CommonGridShape.svelte';
 	import { auth } from '$lib/stores/auth.svelte';
+
+	const googleEnabled = isGoogleConfigured();
 
 	let firstName = $state('');
 	let lastName = $state('');
@@ -20,6 +27,25 @@
 		if (err instanceof ApiError) return err.message;
 		if (err instanceof Error) return err.message;
 		return 'Something went wrong.';
+	}
+
+	async function handleGoogle() {
+		if (!googleEnabled) {
+			error = 'Google sign-in is not configured.';
+			return;
+		}
+		error = null;
+		submitting = true;
+		try {
+			const code = await requestGoogleAuthCode();
+			await auth.googleLogin(code);
+			await goto(resolve('/console'));
+		} catch (err) {
+			if (err instanceof GoogleSignInCancelled) return;
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
 	}
 
 	async function handleSignup(e: SubmitEvent) {
@@ -100,7 +126,11 @@
 				<div>
 					<div class="flex flex-col gap-3">
 						<button
-							class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+							type="button"
+							onclick={handleGoogle}
+							disabled={submitting || !googleEnabled}
+							title={googleEnabled ? undefined : 'Google sign-in is not configured.'}
+							class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 						>
 							<svg
 								width="20"

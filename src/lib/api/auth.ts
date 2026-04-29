@@ -53,6 +53,9 @@ export const authApi = {
 	login(email: string, password: string): Promise<TokenPair> {
 		return unwrap(api.post('/api/app/auth/login', Envelope(TokenPairSchema), { email, password }));
 	},
+	googleLogin(code: string): Promise<TokenPair> {
+		return unwrap(api.post('/api/app/auth/google', Envelope(TokenPairSchema), { code }));
+	},
 	refresh(refreshToken: string): Promise<RefreshResult> {
 		return unwrap(
 			api.post('/api/app/auth/refresh', Envelope(RefreshResultSchema), {

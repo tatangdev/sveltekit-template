@@ -1,8 +1,15 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { ApiError } from '$lib/api/client';
+	import {
+		GoogleSignInCancelled,
+		isGoogleConfigured,
+		requestGoogleAuthCode
+	} from '$lib/auth/google-sdk';
 	import CloseIcon from '$lib/components/ui/icons/CloseIcon.svelte';
 	import { auth } from '$lib/stores/auth.svelte';
+
+	const googleEnabled = isGoogleConfigured();
 
 	type View =
 		| 'signup'
@@ -111,6 +118,25 @@
 			await auth.verifyEmail(email, code);
 			view = 'personal-details';
 		} catch (err) {
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handleGoogle() {
+		if (!googleEnabled) {
+			error = 'Google sign-in is not configured.';
+			return;
+		}
+		error = null;
+		submitting = true;
+		try {
+			const code = await requestGoogleAuthCode();
+			await auth.googleLogin(code);
+			onClose();
+		} catch (err) {
+			if (err instanceof GoogleSignInCancelled) return;
 			error = describeError(err);
 		} finally {
 			submitting = false;
@@ -273,7 +299,13 @@
 
 {#snippet socialButtons(prefix: string)}
 	<div class="flex w-full flex-col gap-3">
-		<button type="button" class={socialBtnClass}>
+		<button
+			type="button"
+			onclick={handleGoogle}
+			disabled={submitting || !googleEnabled}
+			title={googleEnabled ? undefined : 'Google sign-in is not configured.'}
+			class="{socialBtnClass} disabled:cursor-not-allowed disabled:opacity-60"
+		>
 			{@render googleIcon()}
 			{prefix} with Google
 		</button>

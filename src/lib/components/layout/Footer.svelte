@@ -167,7 +167,7 @@
 
 		<div class="border-t border-gray-200 pt-8 dark:border-gray-800">
 			<p class="text-theme-sm text-gray-500 dark:text-gray-400">
-				&copy; {year} Your Company. All rights reserved.
+				&copy; {year} tatangdev. All rights reserved.
 			</p>
 		</div>
 	</div>

@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Home | TailAdmin</title>
+	<title>Home</title>
 </svelte:head>
 
 <section class="mx-auto flex max-w-7xl flex-col items-center px-4 py-24 text-center md:px-6">
@@ -13,8 +13,7 @@
 		Welcome to your starter
 	</h1>
 	<p class="mt-5 max-w-2xl text-base text-gray-500 dark:text-gray-400">
-		A SvelteKit + NestJS template scaffolded with Zod validation, Drizzle ORM, and a
-		TailAdmin-styled admin console.
+		A SvelteKit + NestJS template scaffolded with Zod validation, Drizzle ORM, and an admin console.
 	</p>
 	<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
 		<button

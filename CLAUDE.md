@@ -46,7 +46,7 @@ Tailwind v4 `@theme` block declares every color, font, radius companion, shadow,
 
 If a needed color doesn't exist as a token, add it to `@theme` rather than using a `bg-[#...]` arbitrary value.
 
-`--color-black: #101828` is intentional — Tailadmin redefines `bg-black` to a deep slate, not literal black. The sidebar relies on this.
+`--color-black: #101828` is intentional — `bg-black` is redefined to a deep slate, not literal black. The sidebar relies on this.
 
 `@custom-variant dark (&:is(.dark *))` enables class-based dark mode keyed off `<html>.dark`. The toggle is in `$lib/stores/theme.svelte.ts`. `app.html` has an inline script that reads `localStorage['darkMode']` before render to avoid a flash of light content.
 

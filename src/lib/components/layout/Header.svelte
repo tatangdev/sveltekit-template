@@ -6,6 +6,7 @@
 	import Dropdown from '$lib/components/ui/Dropdown.svelte';
 	import ChevronDownIcon from '$lib/components/ui/icons/ChevronDownIcon.svelte';
 	import CloseIcon from '$lib/components/ui/icons/CloseIcon.svelte';
+	import Logo from '$lib/components/ui/icons/Logo.svelte';
 	import MoonIcon from '$lib/components/ui/icons/MoonIcon.svelte';
 	import SunIcon from '$lib/components/ui/icons/SunIcon.svelte';
 	import { notifications } from '$lib/data/notifications';
@@ -98,9 +99,9 @@
 				<CloseIcon class="fill-current {sidebar.toggle ? 'block xl:hidden' : 'hidden'}" />
 			</button>
 
-			<a href={resolve('/console')} class="xl:hidden">
-				<img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-				<img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+			<a href={resolve('/console')} class="flex items-center gap-2.5 xl:hidden">
+				<Logo class="size-9 text-brand-500" />
+				<span class="text-2xl font-bold text-gray-900 dark:text-white">Starter</span>
 			</a>
 
 			<button

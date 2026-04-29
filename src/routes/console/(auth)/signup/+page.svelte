@@ -21,6 +21,7 @@
 	import EyeOpenIcon from '$lib/components/ui/icons/EyeOpenIcon.svelte';
 	import FacebookLogo from '$lib/components/ui/icons/FacebookLogo.svelte';
 	import GoogleLogo from '$lib/components/ui/icons/GoogleLogo.svelte';
+	import Logo from '$lib/components/ui/icons/Logo.svelte';
 	import { auth } from '$lib/stores/auth.svelte';
 
 	const googleEnabled = isGoogleConfigured();
@@ -407,11 +408,12 @@
 			<div class="z-1 flex items-center justify-center">
 				<CommonGridShape />
 				<div class="flex max-w-xs flex-col items-center">
-					<a href={resolve('/console')} class="mb-4 block">
-						<img src="/images/logo/auth-logo.svg" alt="Logo" />
+					<a href={resolve('/console')} class="mb-4 flex items-center gap-3">
+						<Logo class="size-12 text-brand-500" />
+						<span class="text-3xl font-bold text-white">Starter</span>
 					</a>
 					<p class="text-center text-gray-400 dark:text-white/60">
-						Free and Open-Source Tailwind CSS Admin Dashboard Template
+						Spin up auth, admin, and APIs in minutes — built on SvelteKit + NestJS.
 					</p>
 				</div>
 			</div>

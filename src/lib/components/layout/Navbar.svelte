@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import AuthModal from '$lib/components/auth/AuthModal.svelte';
+	import Logo from '$lib/components/ui/icons/Logo.svelte';
 	import MoonIcon from '$lib/components/ui/icons/MoonIcon.svelte';
 	import SunIcon from '$lib/components/ui/icons/SunIcon.svelte';
 	import { auth } from '$lib/stores/auth.svelte';
@@ -46,9 +47,12 @@
 	class="sticky top-0 z-40 w-full border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
 >
 	<div class="relative mx-auto flex h-20 max-w-(--breakpoint-2xl) items-center px-4 md:px-6">
-		<a href={homeHref} class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-			<img class="h-8 dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-			<img class="hidden h-8 dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+		<a
+			href={homeHref}
+			class="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5"
+		>
+			<Logo class="size-9 text-brand-500" />
+			<span class="text-2xl font-bold text-gray-900 dark:text-white">Starter</span>
 		</a>
 
 		<div class="ml-auto flex items-center gap-2">

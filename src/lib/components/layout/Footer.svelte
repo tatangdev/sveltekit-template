@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import Logo from '$lib/components/ui/icons/Logo.svelte';
 
 	const year = new Date().getFullYear();
 	const homeHref = resolve('/');
@@ -46,12 +47,12 @@
 
 		<div class="flex flex-wrap gap-12">
 			<div class="flex w-72 flex-col gap-6">
-				<a href={homeHref} class="block">
-					<img class="h-8 dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-					<img class="hidden h-8 dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+				<a href={homeHref} class="flex items-center gap-2.5">
+					<Logo class="size-9 text-brand-500" />
+					<span class="text-2xl font-bold text-gray-900 dark:text-white">Starter</span>
 				</a>
 				<p class="text-theme-sm text-gray-500 dark:text-gray-400">
-					Free and Open-Source Tailwind CSS Admin Dashboard Template.
+					A SvelteKit + NestJS starter for shipping production apps fast.
 				</p>
 				<div class="flex items-center gap-5">
 					<a
@@ -166,7 +167,7 @@
 
 		<div class="border-t border-gray-200 pt-8 dark:border-gray-800">
 			<p class="text-theme-sm text-gray-500 dark:text-gray-400">
-				&copy; {year} TailAdmin. All rights reserved.
+				&copy; {year} Your Company. All rights reserved.
 			</p>
 		</div>
 	</div>

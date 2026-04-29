@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
+	import Logo from '$lib/components/ui/icons/Logo.svelte';
 	import { isBranch, isBranchActive, NAV } from '$lib/data/nav';
 	import { persisted } from '$lib/stores/persisted.svelte';
 	import { sidebar } from '$lib/stores/sidebar.svelte';
@@ -37,16 +38,14 @@
 			: 'justify-between'}"
 	>
 		<a href={resolve('/console')}>
-			<span class="logo {sidebar.toggle ? 'hidden' : ''}">
-				<img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-				<img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+			<span class="logo flex items-center gap-2.5 {sidebar.toggle ? 'hidden' : ''}">
+				<Logo class="size-9 text-brand-500" />
+				<span class="text-2xl font-bold text-gray-900 dark:text-white">Starter</span>
 			</span>
 
-			<img
-				class="logo-icon {sidebar.toggle ? 'xl:block' : 'hidden'}"
-				src="/images/logo/logo-icon.svg"
-				alt="Logo"
-			/>
+			<span class="logo-icon {sidebar.toggle ? 'xl:block' : 'hidden'}">
+				<Logo class="size-9 text-brand-500" />
+			</span>
 		</a>
 	</div>
 

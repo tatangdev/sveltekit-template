@@ -44,7 +44,7 @@
 			<button
 				aria-label="Toggle sidebar"
 				data-clickoutside-ignore
-				class="z-99999 flex h-10 w-10 items-center justify-center rounded-lg border-gray-200 text-gray-500 xl:h-11 xl:w-11 xl:border dark:border-gray-800 dark:text-gray-400 {sidebar.toggle
+				class="z-99999 flex h-10 w-10 items-center justify-center rounded-xl border-gray-200 text-gray-500 xl:h-11 xl:w-11 xl:border dark:border-gray-800 dark:text-gray-400 {sidebar.toggle
 					? 'bg-gray-100 xl:bg-transparent dark:bg-gray-800 dark:xl:bg-transparent'
 					: ''}"
 				onclick={(e) => {
@@ -97,7 +97,7 @@
 			<button
 				aria-label="Toggle menu"
 				data-clickoutside-ignore
-				class="z-99999 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 xl:hidden dark:text-gray-400 dark:hover:bg-gray-800 {menuToggle
+				class="z-99999 flex h-10 w-10 items-center justify-center rounded-xl text-gray-700 hover:bg-gray-100 xl:hidden dark:text-gray-400 dark:hover:bg-gray-800 {menuToggle
 					? 'bg-gray-100 dark:bg-gray-800'
 					: ''}"
 				onclick={(e) => {
@@ -149,14 +149,14 @@
 							id="search-input"
 							type="text"
 							placeholder="Search or type command..."
-							class="h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pr-14 pl-12 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden xl:w-107.5 dark:border-gray-800 dark:bg-white/3 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+							class="h-11 w-full rounded-xl border border-gray-200 bg-transparent py-2.5 pr-14 pl-12 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden xl:w-107.5 dark:border-gray-800 dark:bg-white/3 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
 						/>
 
 						<button
 							id="search-button"
 							type="button"
 							aria-label="Keyboard shortcut hint"
-							class="py-1.125 absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-1.75 text-xs tracking-[-0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/3 dark:text-gray-400"
+							class="py-1.125 absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-xl border border-gray-200 bg-gray-50 px-1.75 text-xs tracking-[-0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/3 dark:text-gray-400"
 						>
 							<span> ⌘ </span>
 							<span> K </span>
@@ -223,7 +223,7 @@
 					<Dropdown
 						bind:open={notificationOpen}
 						trigger={notificationTrigger}
-						class="absolute -right-60 mt-4.25 flex h-120 w-87.5 flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg sm:w-90.25 lg:right-0 dark:border-gray-800 dark:bg-gray-dark"
+						class="absolute -right-60 mt-4.25 flex h-120 w-87.5 flex-col rounded-3xl border border-gray-200 bg-white p-3 shadow-theme-lg sm:w-90.25 lg:right-0 dark:border-gray-800 dark:bg-gray-dark"
 					>
 						<div
 							class="mb-3 flex items-center justify-between border-b border-gray-100 pb-3 dark:border-gray-800"
@@ -243,7 +243,7 @@
 							{#each notifications as n (n.id)}
 								<li>
 									<a
-										class="flex gap-3 rounded-lg border-b border-gray-100 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
+										class="flex gap-3 rounded-xl border-b border-gray-100 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
 										href="."
 									>
 										<span class="relative z-1 block h-10 w-full max-w-10 rounded-full">
@@ -278,7 +278,7 @@
 
 						<a
 							href="."
-							class="mt-3 flex justify-center rounded-lg border border-gray-300 bg-white p-3 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200"
+							class="mt-3 flex justify-center rounded-xl border border-gray-300 bg-white p-3 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200"
 						>
 							View All Notification
 						</a>
@@ -310,7 +310,7 @@
 				<Dropdown
 					bind:open={userOpen}
 					trigger={userTrigger}
-					class="absolute right-0 mt-4.25 flex w-65 flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
+					class="absolute right-0 mt-4.25 flex w-65 flex-col rounded-3xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
 				>
 					<div>
 						<span class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
@@ -325,7 +325,7 @@
 						<li>
 							<a
 								href="/console/profile"
-								class="group flex items-center gap-3 rounded-lg px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+								class="group flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 							>
 								<svg
 									class="fill-gray-500 group-hover:fill-gray-700 dark:fill-gray-400 dark:group-hover:fill-gray-300"
@@ -349,7 +349,7 @@
 						<li>
 							<a
 								href="/console/settings"
-								class="group flex items-center gap-3 rounded-lg px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+								class="group flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 							>
 								<svg
 									class="fill-gray-500 group-hover:fill-gray-700 dark:fill-gray-400 dark:group-hover:fill-gray-300"
@@ -373,7 +373,7 @@
 						<li>
 							<a
 								href="/console/support"
-								class="group flex items-center gap-3 rounded-lg px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+								class="group flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 							>
 								<svg
 									class="fill-gray-500 group-hover:fill-gray-700 dark:fill-gray-400 dark:group-hover:fill-gray-300"
@@ -397,7 +397,7 @@
 					</ul>
 					<button
 						type="button"
-						class="group mt-3 flex items-center gap-3 rounded-lg px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+						class="group mt-3 flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 					>
 						<svg
 							class="fill-gray-500 group-hover:fill-gray-700 dark:group-hover:fill-gray-300"

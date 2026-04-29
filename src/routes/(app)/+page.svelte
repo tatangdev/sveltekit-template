@@ -22,13 +22,13 @@
 	<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
 		<a
 			href={signupHref}
-			class="flex h-11 items-center rounded-lg bg-brand-500 px-5 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600"
+			class="flex h-11 items-center rounded-xl bg-brand-500 px-5 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600"
 		>
 			Get started
 		</a>
 		<a
 			href={signinHref}
-			class="flex h-11 items-center rounded-lg border border-gray-300 bg-white px-5 text-theme-sm font-medium text-gray-700 shadow-theme-xs transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+			class="flex h-11 items-center rounded-xl border border-gray-300 bg-white px-5 text-theme-sm font-medium text-gray-700 shadow-theme-xs transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
 		>
 			Sign in
 		</a>

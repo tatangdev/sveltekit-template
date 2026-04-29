@@ -42,7 +42,7 @@
 	const iconBtnClass =
 		'flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white';
 	const menuItemClass =
-		'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300';
+		'flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300';
 </script>
 
 <header
@@ -58,14 +58,14 @@
 			<button
 				type="button"
 				onclick={() => openAuth('login')}
-				class="hidden h-11 items-center rounded-lg px-4 text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 sm:flex dark:text-gray-300 dark:hover:bg-white/5"
+				class="hidden h-11 items-center rounded-xl px-4 text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 sm:flex dark:text-gray-300 dark:hover:bg-white/5"
 			>
 				Sign in
 			</button>
 			<button
 				type="button"
 				onclick={() => openAuth('signup')}
-				class="hidden h-11 items-center rounded-lg bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600 sm:flex"
+				class="hidden h-11 items-center rounded-xl bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600 sm:flex"
 			>
 				Sign up
 			</button>
@@ -110,7 +110,7 @@
 				{#if menuOpen}
 					<div
 						role="menu"
-						class="absolute top-full right-0 z-30 mt-2 flex w-56 flex-col gap-1 rounded-2xl border border-gray-200 bg-white p-2 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
+						class="absolute top-full right-0 z-30 mt-2 flex w-56 flex-col gap-1 rounded-3xl border border-gray-200 bg-white p-2 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
 					>
 						<button
 							type="button"

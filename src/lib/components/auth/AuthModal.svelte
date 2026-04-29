@@ -39,13 +39,13 @@
 	const labelClass = 'text-theme-sm font-medium text-gray-700 dark:text-gray-400';
 	const hintClass = 'text-theme-xs text-gray-500 dark:text-gray-400';
 	const inputClass =
-		'h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800';
+		'h-11 w-full rounded-xl border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800';
 	const primaryBtnClass =
-		'flex h-11 w-full items-center justify-center rounded-lg bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600';
+		'flex h-11 w-full items-center justify-center rounded-xl bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600';
 	const secondaryBtnClass =
-		'flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 text-theme-sm font-medium text-gray-700 shadow-theme-xs transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800';
+		'flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 text-theme-sm font-medium text-gray-700 shadow-theme-xs transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800';
 	const socialBtnClass =
-		'inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg bg-gray-100 px-4 text-theme-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10';
+		'inline-flex h-11 w-full items-center justify-center gap-3 rounded-xl bg-gray-100 px-4 text-theme-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10';
 	const backLinkClass =
 		'inline-flex items-center justify-center gap-1.5 text-theme-sm font-medium text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200';
 	const inlineLinkClass =
@@ -245,7 +245,7 @@
 					onpaste={handleOtpPaste}
 					placeholder="0"
 					aria-label={`Digit ${i + 1}`}
-					class="size-12 rounded-lg border border-gray-300 bg-transparent text-center text-xl font-medium text-gray-800 shadow-theme-xs placeholder:text-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/20 dark:focus:border-brand-800"
+					class="size-12 rounded-xl border border-gray-300 bg-transparent text-center text-xl font-medium text-gray-800 shadow-theme-xs placeholder:text-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/20 dark:focus:border-brand-800"
 				/>
 			{/each}
 		</div>
@@ -308,7 +308,7 @@
 				value={opts.value}
 				oninput={(e) => opts.onUpdate((e.currentTarget as HTMLInputElement).value)}
 				placeholder={opts.placeholder}
-				class="h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+				class="h-11 w-full rounded-xl border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
 			/>
 			<button
 				type="button"
@@ -339,13 +339,13 @@
 		tabindex="-1"
 	>
 		<div
-			class="relative w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-theme-xl dark:border-gray-800 dark:bg-gray-dark"
+			class="relative w-full max-w-md overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-theme-xl dark:border-gray-800 dark:bg-gray-dark"
 		>
 			<button
 				type="button"
 				aria-label="Close"
 				onclick={onClose}
-				class="absolute top-3 right-3 z-10 flex size-10 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
+				class="absolute top-3 right-3 z-10 flex size-10 items-center justify-center rounded-xl text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
 			>
 				<CloseIcon class="size-5 fill-current" />
 			</button>

@@ -53,7 +53,7 @@
 					<div>
 						<div class="flex flex-col gap-3">
 							<button
-								class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+								class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 							>
 								<svg
 									width="20"
@@ -82,7 +82,7 @@
 								Sign in with Google
 							</button>
 							<button
-								class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+								class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 							>
 								<svg
 									width="20"
@@ -99,7 +99,7 @@
 								Sign in with Facebook
 							</button>
 							<button
-								class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+								class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 							>
 								<svg
 									class="fill-current"
@@ -138,7 +138,7 @@
 										id="email"
 										name="email"
 										placeholder="info@gmail.com"
-										class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+										class="h-11 w-full rounded-xl border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
 									/>
 								</div>
 								<div>
@@ -153,7 +153,7 @@
 											id="password"
 											type={showPassword ? 'text' : 'password'}
 											placeholder="Enter your password"
-											class="h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+											class="h-11 w-full rounded-xl border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
 										/>
 										<button
 											type="button"
@@ -211,7 +211,7 @@
 													onchange={() => (keepLoggedIn = !keepLoggedIn)}
 												/>
 												<div
-													class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px] {keepLoggedIn
+													class="mr-3 flex h-5 w-5 items-center justify-center rounded-lg border-[1.25px] {keepLoggedIn
 														? 'border-brand-500 bg-brand-500'
 														: 'border-gray-300 bg-transparent dark:border-gray-700'}"
 												>
@@ -245,7 +245,7 @@
 								</div>
 								<div>
 									<button
-										class="flex w-full items-center justify-center rounded-lg bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs transition hover:bg-brand-600"
+										class="flex w-full items-center justify-center rounded-xl bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs transition hover:bg-brand-600"
 									>
 										Sign In
 									</button>

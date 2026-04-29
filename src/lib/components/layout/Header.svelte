@@ -128,7 +128,7 @@
 					<div class="relative">
 						<span class="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2">
 							<svg
-								class="fill-gray-500 dark:fill-gray-400"
+								class="text-gray-500 dark:text-gray-400"
 								width="20"
 								height="20"
 								viewBox="0 0 20 20"
@@ -156,7 +156,7 @@
 							id="search-button"
 							type="button"
 							aria-label="Keyboard shortcut hint"
-							class="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-1.75 py-1.125 text-xs tracking-[-0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/3 dark:text-gray-400"
+							class="py-1.125 absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-1.75 text-xs tracking-[-0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/3 dark:text-gray-400"
 						>
 							<span> ⌘ </span>
 							<span> K </span>
@@ -239,7 +239,7 @@
 							</button>
 						</div>
 
-						<ul class="custom-scrollbar flex h-auto flex-col overflow-y-auto">
+						<ul class="flex custom-scrollbar h-auto flex-col overflow-y-auto">
 							{#each notifications as n (n.id)}
 								<li>
 									<a
@@ -259,7 +259,8 @@
 											<span class="mb-1.5 block text-theme-sm text-gray-500 dark:text-gray-400">
 												<span class="font-medium text-gray-800 dark:text-white/90">{n.user}</span>
 												{n.message}
-												<span class="font-medium text-gray-800 dark:text-white/90">{n.project}</span>
+												<span class="font-medium text-gray-800 dark:text-white/90">{n.project}</span
+												>
 											</span>
 
 											<span

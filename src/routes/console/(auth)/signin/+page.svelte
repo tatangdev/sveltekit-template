@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import CommonGridShape from '$lib/components/ui/CommonGridShape.svelte';
 
 	let showPassword = $state(false);
@@ -16,7 +17,7 @@
 		<div class="flex w-full flex-1 flex-col lg:w-1/2">
 			<div class="mx-auto w-full max-w-md pt-10">
 				<a
-					href="/console"
+					href={resolve('/console')}
 					class="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
 				>
 					<svg
@@ -29,7 +30,6 @@
 					>
 						<path
 							d="M12.7083 5L7.5 10.2083L12.7083 15.4167"
-							stroke=""
 							stroke-width="1.5"
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -51,7 +51,7 @@
 						</p>
 					</div>
 					<div>
-						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
+						<div class="flex flex-col gap-3">
 							<button
 								class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 							>
@@ -85,19 +85,35 @@
 								class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 							>
 								<svg
-									width="21"
-									class="fill-current"
+									width="20"
 									height="20"
-									viewBox="0 0 21 20"
+									viewBox="0 0 20 20"
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg"
 								>
 									<path
-										d="M15.6705 1.875H18.4272L12.4047 8.75833L19.4897 18.125H13.9422L9.59717 12.4442L4.62554 18.125H1.86721L8.30887 10.7625L1.51221 1.875H7.20054L11.128 7.0675L15.6705 1.875ZM14.703 16.475H16.2305L6.37054 3.43833H4.73137L14.703 16.475Z"
+										d="M11.6663 12.1366H13.7497L14.583 8.80322H11.6663V7.13656C11.6663 6.27874 11.6663 5.46989 13.333 5.46989H14.583V2.66997C14.3116 2.63393 13.2855 2.55322 12.2021 2.55322C9.94001 2.55322 8.33301 3.93394 8.33301 6.46965V8.80322H5.83301V12.1366H8.33301V19.2199H11.6663V12.1366Z"
+										fill="#1877F2"
 									/>
 								</svg>
-
-								Sign in with X
+								Sign in with Facebook
+							</button>
+							<button
+								class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+							>
+								<svg
+									class="fill-current"
+									width="20"
+									height="20"
+									viewBox="0 0 20 20"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M16.365 1.43c.018 1.066-.475 2.046-1.215 2.78-.736.731-1.815 1.222-2.785 1.072-.123-1.05.378-2.133 1.117-2.836.823-.787 1.953-1.146 2.883-1.016zM18.71 14.5c-.45 1.038-1.018 2.052-1.882 3.06-.864 1.008-1.95 1.762-3.115 1.78-1.118.018-1.482-.643-2.764-.643-1.282 0-1.683.625-2.745.661-1.106.036-1.952-.84-2.823-1.84-1.78-2.038-3.143-5.764-1.31-8.272.91-1.245 2.535-2.034 4.27-2.06 1.107-.018 2.151.7 2.835.7.685 0 1.95-.864 3.27-.737.553.022 2.108.215 3.106 1.612-.082.05-1.864 1.06-1.844 3.143.022 2.5 2.232 3.343 2.255 3.353-.018.054-.343.96-.838 2.005z"
+									/>
+								</svg>
+								Sign in with Apple
 							</button>
 						</div>
 						<div class="relative py-3 sm:py-5">
@@ -222,7 +238,7 @@
 										</label>
 									</div>
 									<a
-										href="/console/reset-password"
+										href={resolve('/console/reset-password')}
 										class="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
 										>Forgot password?</a
 									>
@@ -237,10 +253,12 @@
 							</div>
 						</form>
 						<div class="mt-5">
-							<p class="text-center text-sm font-normal text-gray-700 sm:text-start dark:text-gray-400">
+							<p
+								class="text-center text-sm font-normal text-gray-700 sm:text-start dark:text-gray-400"
+							>
 								Don't have an account?
 								<a
-									href="/console/signup"
+									href={resolve('/console/signup')}
 									class="text-brand-500 hover:text-brand-600 dark:text-brand-400">Sign Up</a
 								>
 							</p>
@@ -256,9 +274,12 @@
 			<div class="z-1 flex items-center justify-center">
 				<CommonGridShape />
 				<div class="flex max-w-xs flex-col items-center">
-					<a href="/console" class="mb-4 block">
+					<a href={resolve('/console')} class="mb-4 block">
 						<img src="/images/logo/auth-logo.svg" alt="Logo" />
 					</a>
+					<p class="text-center text-gray-400 dark:text-white/60">
+						Free and Open-Source Tailwind CSS Admin Dashboard Template
+					</p>
 				</div>
 			</div>
 		</div>

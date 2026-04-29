@@ -2,6 +2,11 @@
 	import type { Snippet } from 'svelte';
 	import { ApiError } from '$lib/api/client';
 	import {
+		FacebookSignInCancelled,
+		isFacebookConfigured,
+		requestFacebookAccessToken
+	} from '$lib/auth/facebook-sdk';
+	import {
 		GoogleSignInCancelled,
 		isGoogleConfigured,
 		requestGoogleAuthCode
@@ -10,6 +15,7 @@
 	import { auth } from '$lib/stores/auth.svelte';
 
 	const googleEnabled = isGoogleConfigured();
+	const facebookEnabled = isFacebookConfigured();
 
 	type View =
 		| 'signup'
@@ -137,6 +143,25 @@
 			onClose();
 		} catch (err) {
 			if (err instanceof GoogleSignInCancelled) return;
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handleFacebook() {
+		if (!facebookEnabled) {
+			error = 'Facebook sign-in is not configured.';
+			return;
+		}
+		error = null;
+		submitting = true;
+		try {
+			const accessToken = await requestFacebookAccessToken();
+			await auth.facebookLogin(accessToken);
+			onClose();
+		} catch (err) {
+			if (err instanceof FacebookSignInCancelled) return;
 			error = describeError(err);
 		} finally {
 			submitting = false;
@@ -309,7 +334,13 @@
 			{@render googleIcon()}
 			{prefix} with Google
 		</button>
-		<button type="button" class={socialBtnClass}>
+		<button
+			type="button"
+			onclick={handleFacebook}
+			disabled={submitting || !facebookEnabled}
+			title={facebookEnabled ? undefined : 'Facebook sign-in is not configured.'}
+			class="{socialBtnClass} disabled:cursor-not-allowed disabled:opacity-60"
+		>
 			{@render facebookIcon()}
 			{prefix} with Facebook
 		</button>

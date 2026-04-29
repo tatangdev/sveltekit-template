@@ -3,6 +3,11 @@
 	import { resolve } from '$app/paths';
 	import { ApiError } from '$lib/api/client';
 	import {
+		FacebookSignInCancelled,
+		isFacebookConfigured,
+		requestFacebookAccessToken
+	} from '$lib/auth/facebook-sdk';
+	import {
 		GoogleSignInCancelled,
 		isGoogleConfigured,
 		requestGoogleAuthCode
@@ -11,6 +16,7 @@
 	import { auth } from '$lib/stores/auth.svelte';
 
 	const googleEnabled = isGoogleConfigured();
+	const facebookEnabled = isFacebookConfigured();
 
 	let firstName = $state('');
 	let lastName = $state('');
@@ -42,6 +48,25 @@
 			await goto(resolve('/console'));
 		} catch (err) {
 			if (err instanceof GoogleSignInCancelled) return;
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handleFacebook() {
+		if (!facebookEnabled) {
+			error = 'Facebook sign-in is not configured.';
+			return;
+		}
+		error = null;
+		submitting = true;
+		try {
+			const accessToken = await requestFacebookAccessToken();
+			await auth.facebookLogin(accessToken);
+			await goto(resolve('/console'));
+		} catch (err) {
+			if (err instanceof FacebookSignInCancelled) return;
 			error = describeError(err);
 		} finally {
 			submitting = false;
@@ -159,7 +184,11 @@
 							Sign up with Google
 						</button>
 						<button
-							class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+							type="button"
+							onclick={handleFacebook}
+							disabled={submitting || !facebookEnabled}
+							title={facebookEnabled ? undefined : 'Facebook sign-in is not configured.'}
+							class="inline-flex items-center justify-center gap-3 rounded-xl bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
 						>
 							<svg
 								width="20"

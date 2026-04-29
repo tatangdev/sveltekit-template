@@ -179,6 +179,17 @@ export const auth = {
 		pendingEmail = null;
 		await loadUser();
 	},
+	async facebookLogin(accessToken: string) {
+		const result = await authApi.facebookLogin(accessToken);
+		setTokens({
+			userId: result.user_id,
+			accessToken: result.access_token,
+			refreshToken: result.refresh_token,
+			expiresAt: result.expires_at
+		});
+		pendingEmail = null;
+		await loadUser();
+	},
 	async logout() {
 		const token = tokens?.accessToken;
 		if (token) {

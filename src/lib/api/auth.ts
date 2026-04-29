@@ -56,6 +56,13 @@ export const authApi = {
 	googleLogin(code: string): Promise<TokenPair> {
 		return unwrap(api.post('/api/app/auth/google', Envelope(TokenPairSchema), { code }));
 	},
+	facebookLogin(accessToken: string): Promise<TokenPair> {
+		return unwrap(
+			api.post('/api/app/auth/facebook', Envelope(TokenPairSchema), {
+				access_token: accessToken
+			})
+		);
+	},
 	refresh(refreshToken: string): Promise<RefreshResult> {
 		return unwrap(
 			api.post('/api/app/auth/refresh', Envelope(RefreshResultSchema), {

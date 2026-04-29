@@ -63,6 +63,14 @@ export const authApi = {
 			})
 		);
 	},
+	appleLogin(idToken: string, userName?: string): Promise<TokenPair> {
+		return unwrap(
+			api.post('/api/app/auth/apple', Envelope(TokenPairSchema), {
+				id_token: idToken,
+				...(userName ? { user_name: userName } : {})
+			})
+		);
+	},
 	refresh(refreshToken: string): Promise<RefreshResult> {
 		return unwrap(
 			api.post('/api/app/auth/refresh', Envelope(RefreshResultSchema), {

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { ApiError } from '$lib/api/client';
+	import { AppleSignInCancelled, isAppleConfigured, requestAppleAuth } from '$lib/auth/apple-sdk';
 	import {
 		FacebookSignInCancelled,
 		isFacebookConfigured,
@@ -16,6 +17,7 @@
 
 	const googleEnabled = isGoogleConfigured();
 	const facebookEnabled = isFacebookConfigured();
+	const appleEnabled = isAppleConfigured();
 
 	type View =
 		| 'signup'
@@ -162,6 +164,25 @@
 			onClose();
 		} catch (err) {
 			if (err instanceof FacebookSignInCancelled) return;
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handleApple() {
+		if (!appleEnabled) {
+			error = 'Apple sign-in is not configured.';
+			return;
+		}
+		error = null;
+		submitting = true;
+		try {
+			const result = await requestAppleAuth();
+			await auth.appleLogin(result.idToken, result.userName);
+			onClose();
+		} catch (err) {
+			if (err instanceof AppleSignInCancelled) return;
 			error = describeError(err);
 		} finally {
 			submitting = false;
@@ -344,7 +365,13 @@
 			{@render facebookIcon()}
 			{prefix} with Facebook
 		</button>
-		<button type="button" class={socialBtnClass}>
+		<button
+			type="button"
+			onclick={handleApple}
+			disabled={submitting || !appleEnabled}
+			title={appleEnabled ? undefined : 'Apple sign-in is not configured.'}
+			class="{socialBtnClass} disabled:cursor-not-allowed disabled:opacity-60"
+		>
 			{@render appleIcon()}
 			{prefix} with Apple
 		</button>

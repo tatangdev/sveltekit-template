@@ -4,9 +4,21 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
+		<script>
+			(function () {
+				try {
+					var raw = localStorage.getItem('darkMode');
+					if (raw && JSON.parse(raw) === true) {
+						document.documentElement.classList.add('dark');
+					}
+				} catch (e) {
+					/* ignore */
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<body data-sveltekit-preload-data="hover" class="font-outfit">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-
-	const signinHref = resolve('/console/signin');
-	const signupHref = resolve('/console/signup');
+	import { authModal } from '$lib/stores/authModal.svelte';
 </script>
 
 <svelte:head>
@@ -20,17 +17,19 @@
 		TailAdmin-styled admin console.
 	</p>
 	<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-		<a
-			href={signupHref}
+		<button
+			type="button"
+			onclick={() => authModal.show('signup')}
 			class="flex h-11 items-center rounded-xl bg-brand-500 px-5 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600"
 		>
 			Get started
-		</a>
-		<a
-			href={signinHref}
+		</button>
+		<button
+			type="button"
+			onclick={() => authModal.show('login')}
 			class="flex h-11 items-center rounded-xl border border-gray-300 bg-white px-5 text-theme-sm font-medium text-gray-700 shadow-theme-xs transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
 		>
 			Sign in
-		</a>
+		</button>
 	</div>
 </section>

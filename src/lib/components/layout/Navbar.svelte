@@ -3,6 +3,7 @@
 	import AuthModal from '$lib/components/auth/AuthModal.svelte';
 	import MoonIcon from '$lib/components/ui/icons/MoonIcon.svelte';
 	import SunIcon from '$lib/components/ui/icons/SunIcon.svelte';
+	import { authModal } from '$lib/stores/authModal.svelte';
 	import { theme } from '$lib/stores/theme.svelte';
 
 	const homeHref = resolve('/');
@@ -10,12 +11,8 @@
 	let menuOpen = $state(false);
 	let menuRef = $state<HTMLDivElement | undefined>();
 
-	let authModalOpen = $state(false);
-	let authInitialView = $state<'signup' | 'login'>('signup');
-
 	function openAuth(view: 'signup' | 'login') {
-		authInitialView = view;
-		authModalOpen = true;
+		authModal.show(view);
 		menuOpen = false;
 	}
 
@@ -140,7 +137,7 @@
 </header>
 
 <AuthModal
-	open={authModalOpen}
-	onClose={() => (authModalOpen = false)}
-	initialView={authInitialView}
+	open={authModal.open}
+	onClose={() => authModal.close()}
+	initialView={authModal.initialView}
 />

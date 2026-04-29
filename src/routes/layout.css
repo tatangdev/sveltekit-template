@@ -191,6 +191,9 @@ layer(base);
 	}
 	body {
 		@apply relative z-1 bg-gray-50 font-outfit font-normal dark:bg-gray-900;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-smooth: always;
 	}
 }
 

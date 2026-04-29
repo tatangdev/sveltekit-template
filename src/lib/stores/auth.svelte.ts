@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { authApi } from '$lib/api/auth';
+import { authApi, type TokenPair } from '$lib/api/auth';
 import { ApiError } from '$lib/api/client';
 import { usersApi, type UpdateUserRequest, type User } from '$lib/api/users';
 
@@ -98,6 +98,17 @@ async function loadUser() {
 	}
 }
 
+async function applyTokenPair(result: TokenPair) {
+	setTokens({
+		userId: result.user_id,
+		accessToken: result.access_token,
+		refreshToken: result.refresh_token,
+		expiresAt: result.expires_at
+	});
+	pendingEmail = null;
+	await loadUser();
+}
+
 if (browser) {
 	const t = tokens;
 	if (t) {
@@ -145,61 +156,22 @@ export const auth = {
 		pendingEmail = email;
 	},
 	async verifyEmail(email: string, otpCode: string) {
-		const result = await authApi.verifyEmail(email, otpCode);
-		setTokens({
-			userId: result.user_id,
-			accessToken: result.access_token,
-			refreshToken: result.refresh_token,
-			expiresAt: result.expires_at
-		});
-		pendingEmail = null;
-		await loadUser();
+		await applyTokenPair(await authApi.verifyEmail(email, otpCode));
 	},
 	async resendOtp(email: string) {
 		await authApi.resendOtp(email);
 	},
 	async login(email: string, password: string) {
-		const result = await authApi.login(email, password);
-		setTokens({
-			userId: result.user_id,
-			accessToken: result.access_token,
-			refreshToken: result.refresh_token,
-			expiresAt: result.expires_at
-		});
-		await loadUser();
+		await applyTokenPair(await authApi.login(email, password));
 	},
 	async googleLogin(code: string) {
-		const result = await authApi.googleLogin(code);
-		setTokens({
-			userId: result.user_id,
-			accessToken: result.access_token,
-			refreshToken: result.refresh_token,
-			expiresAt: result.expires_at
-		});
-		pendingEmail = null;
-		await loadUser();
+		await applyTokenPair(await authApi.googleLogin(code));
 	},
 	async facebookLogin(accessToken: string) {
-		const result = await authApi.facebookLogin(accessToken);
-		setTokens({
-			userId: result.user_id,
-			accessToken: result.access_token,
-			refreshToken: result.refresh_token,
-			expiresAt: result.expires_at
-		});
-		pendingEmail = null;
-		await loadUser();
+		await applyTokenPair(await authApi.facebookLogin(accessToken));
 	},
 	async appleLogin(idToken: string, userName?: string) {
-		const result = await authApi.appleLogin(idToken, userName);
-		setTokens({
-			userId: result.user_id,
-			accessToken: result.access_token,
-			refreshToken: result.refresh_token,
-			expiresAt: result.expires_at
-		});
-		pendingEmail = null;
-		await loadUser();
+		await applyTokenPair(await authApi.appleLogin(idToken, userName));
 	},
 	async logout() {
 		const token = tokens?.accessToken;

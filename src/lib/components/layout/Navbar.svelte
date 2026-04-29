@@ -52,20 +52,29 @@
 		</a>
 
 		<div class="ml-auto flex items-center gap-2">
-			<button
-				type="button"
-				onclick={() => openAuth('login')}
-				class="hidden h-11 items-center rounded-xl px-4 text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 sm:flex dark:text-gray-300 dark:hover:bg-white/5"
-			>
-				Sign in
-			</button>
-			<button
-				type="button"
-				onclick={() => openAuth('signup')}
-				class="hidden h-11 items-center rounded-xl bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600 sm:flex"
-			>
-				Sign up
-			</button>
+			{#if auth.isAuthenticated}
+				<a
+					href={resolve('/console')}
+					class="hidden h-11 items-center rounded-xl bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600 sm:flex"
+				>
+					Open dashboard
+				</a>
+			{:else}
+				<button
+					type="button"
+					onclick={() => openAuth('login')}
+					class="hidden h-11 items-center rounded-xl px-4 text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 sm:flex dark:text-gray-300 dark:hover:bg-white/5"
+				>
+					Sign in
+				</button>
+				<button
+					type="button"
+					onclick={() => openAuth('signup')}
+					class="hidden h-11 items-center rounded-xl bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600 sm:flex"
+				>
+					Sign up
+				</button>
+			{/if}
 
 			<button
 				type="button"
@@ -109,22 +118,33 @@
 						role="menu"
 						class="absolute top-full right-0 z-30 mt-2 flex w-56 flex-col gap-1 rounded-3xl border border-gray-200 bg-white p-2 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
 					>
-						<button
-							type="button"
-							role="menuitem"
-							onclick={() => openAuth('login')}
-							class="{menuItemClass} sm:hidden"
-						>
-							Sign in
-						</button>
-						<button
-							type="button"
-							role="menuitem"
-							onclick={() => openAuth('signup')}
-							class="{menuItemClass} sm:hidden"
-						>
-							Sign up
-						</button>
+						{#if auth.isAuthenticated}
+							<a
+								role="menuitem"
+								href={resolve('/console')}
+								onclick={() => (menuOpen = false)}
+								class="{menuItemClass} sm:hidden"
+							>
+								Open dashboard
+							</a>
+						{:else}
+							<button
+								type="button"
+								role="menuitem"
+								onclick={() => openAuth('login')}
+								class="{menuItemClass} sm:hidden"
+							>
+								Sign in
+							</button>
+							<button
+								type="button"
+								role="menuitem"
+								onclick={() => openAuth('signup')}
+								class="{menuItemClass} sm:hidden"
+							>
+								Sign up
+							</button>
+						{/if}
 						<button type="button" role="menuitem" class={menuItemClass}>Features</button>
 						<button type="button" role="menuitem" class={menuItemClass}>Pricing</button>
 						<button type="button" role="menuitem" class={menuItemClass}>Documentation</button>

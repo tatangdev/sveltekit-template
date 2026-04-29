@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { clickOutside } from '$lib/actions/clickOutside';
 	import Dropdown from '$lib/components/ui/Dropdown.svelte';
@@ -8,6 +9,7 @@
 	import MoonIcon from '$lib/components/ui/icons/MoonIcon.svelte';
 	import SunIcon from '$lib/components/ui/icons/SunIcon.svelte';
 	import { notifications } from '$lib/data/notifications';
+	import { auth } from '$lib/stores/auth.svelte';
 	import { sidebar } from '$lib/stores/sidebar.svelte';
 	import { theme } from '$lib/stores/theme.svelte';
 
@@ -33,6 +35,12 @@
 			document.removeEventListener('keydown', onKey);
 		};
 	});
+
+	async function handleSignOut() {
+		userOpen = false;
+		await auth.logout();
+		await goto(resolve('/'));
+	}
 </script>
 
 <header
@@ -398,6 +406,7 @@
 					</ul>
 					<button
 						type="button"
+						onclick={handleSignOut}
 						class="group mt-3 flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 					>
 						<svg

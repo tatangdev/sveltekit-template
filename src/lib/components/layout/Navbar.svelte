@@ -1,15 +1,23 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import AuthModal from '$lib/components/auth/AuthModal.svelte';
 	import MoonIcon from '$lib/components/ui/icons/MoonIcon.svelte';
 	import SunIcon from '$lib/components/ui/icons/SunIcon.svelte';
 	import { theme } from '$lib/stores/theme.svelte';
 
 	const homeHref = resolve('/');
-	const signinHref = resolve('/console/signin');
-	const signupHref = resolve('/console/signup');
 
 	let menuOpen = $state(false);
 	let menuRef = $state<HTMLDivElement | undefined>();
+
+	let authModalOpen = $state(false);
+	let authInitialView = $state<'signup' | 'login'>('signup');
+
+	function openAuth(view: 'signup' | 'login') {
+		authInitialView = view;
+		authModalOpen = true;
+		menuOpen = false;
+	}
 
 	$effect(() => {
 		if (!menuOpen) return;
@@ -47,18 +55,20 @@
 		</a>
 
 		<div class="ml-auto flex items-center gap-2">
-			<a
-				href={signinHref}
+			<button
+				type="button"
+				onclick={() => openAuth('login')}
 				class="hidden h-11 items-center rounded-lg px-4 text-theme-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 sm:flex dark:text-gray-300 dark:hover:bg-white/5"
 			>
 				Sign in
-			</a>
-			<a
-				href={signupHref}
+			</button>
+			<button
+				type="button"
+				onclick={() => openAuth('signup')}
 				class="hidden h-11 items-center rounded-lg bg-brand-500 px-4 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600 sm:flex"
 			>
 				Sign up
-			</a>
+			</button>
 
 			<button
 				type="button"
@@ -102,8 +112,22 @@
 						role="menu"
 						class="absolute top-full right-0 z-30 mt-2 flex w-56 flex-col gap-1 rounded-2xl border border-gray-200 bg-white p-2 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
 					>
-						<a href={signinHref} role="menuitem" class="{menuItemClass} sm:hidden">Sign in</a>
-						<a href={signupHref} role="menuitem" class="{menuItemClass} sm:hidden">Sign up</a>
+						<button
+							type="button"
+							role="menuitem"
+							onclick={() => openAuth('login')}
+							class="{menuItemClass} sm:hidden"
+						>
+							Sign in
+						</button>
+						<button
+							type="button"
+							role="menuitem"
+							onclick={() => openAuth('signup')}
+							class="{menuItemClass} sm:hidden"
+						>
+							Sign up
+						</button>
 						<button type="button" role="menuitem" class={menuItemClass}>Features</button>
 						<button type="button" role="menuitem" class={menuItemClass}>Pricing</button>
 						<button type="button" role="menuitem" class={menuItemClass}>Documentation</button>
@@ -114,3 +138,9 @@
 		</div>
 	</div>
 </header>
+
+<AuthModal
+	open={authModalOpen}
+	onClose={() => (authModalOpen = false)}
+	initialView={authInitialView}
+/>

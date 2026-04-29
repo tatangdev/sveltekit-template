@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import { ApiError } from '$lib/api/client';
 	import CloseIcon from '$lib/components/ui/icons/CloseIcon.svelte';
+	import { auth } from '$lib/stores/auth.svelte';
 
 	type View =
 		| 'signup'
@@ -29,10 +31,20 @@
 	let otp = $state(['', '', '', '', '', '']);
 	let otpRefs: HTMLInputElement[] = $state([]);
 
-	let fullName = $state('');
+	let firstName = $state('');
+	let lastName = $state('');
 	let dateOfBirth = $state('');
-	let currency = $state('USD - US Dollar');
+	let currency = $state('USD');
 	let marketingEmails = $state(true);
+
+	let submitting = $state(false);
+	let error = $state<string | null>(null);
+
+	function describeError(err: unknown): string {
+		if (err instanceof ApiError) return err.message;
+		if (err instanceof Error) return err.message;
+		return 'Something went wrong. Please try again.';
+	}
 
 	const headingClass = 'w-full text-title-sm font-semibold text-gray-800 dark:text-white/90';
 	const subtitleClass = 'w-full text-theme-sm text-gray-500 dark:text-gray-400';
@@ -59,10 +71,105 @@
 		otp = ['', '', '', '', '', ''];
 		showPassword = false;
 		showConfirmPassword = false;
-		fullName = '';
+		firstName = '';
+		lastName = '';
 		dateOfBirth = '';
-		currency = 'USD - US Dollar';
+		currency = 'USD';
 		marketingEmails = true;
+		submitting = false;
+		error = null;
+	}
+
+	async function handleSignup(e: SubmitEvent) {
+		e.preventDefault();
+		error = null;
+		if (password !== confirmPassword) {
+			error = 'Passwords do not match.';
+			return;
+		}
+		submitting = true;
+		try {
+			await auth.register(email, password);
+			view = 'email-verify';
+		} catch (err) {
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handleVerify(e: SubmitEvent) {
+		e.preventDefault();
+		error = null;
+		const code = otp.join('');
+		if (code.length !== 6) {
+			error = 'Enter the 6-digit code.';
+			return;
+		}
+		submitting = true;
+		try {
+			await auth.verifyEmail(email, code);
+			view = 'personal-details';
+		} catch (err) {
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handleResendOtp() {
+		error = null;
+		try {
+			await auth.resendOtp(email);
+		} catch (err) {
+			error = describeError(err);
+		}
+	}
+
+	async function handleLogin(e: SubmitEvent) {
+		e.preventDefault();
+		error = null;
+		submitting = true;
+		try {
+			await auth.login(email, password);
+			onClose();
+		} catch (err) {
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handlePersonalDetails(e: SubmitEvent) {
+		e.preventDefault();
+		error = null;
+		submitting = true;
+		try {
+			await auth.updateMe({
+				first_name: firstName,
+				last_name: lastName,
+				...(dateOfBirth ? { date_of_birth: dateOfBirth } : {})
+			});
+			view = 'preferences';
+		} catch (err) {
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
+	}
+
+	async function handlePreferences(e: SubmitEvent) {
+		e.preventDefault();
+		error = null;
+		submitting = true;
+		try {
+			await auth.updateMe({ currency, marketing_emails: marketingEmails });
+			view = 'welcome';
+		} catch (err) {
+			error = describeError(err);
+		} finally {
+			submitting = false;
+		}
 	}
 
 	function handleOtpInput(index: number, e: Event) {
@@ -88,10 +195,6 @@
 		const text = e.clipboardData?.getData('text').replace(/\D/g, '').slice(0, 6) ?? '';
 		for (let i = 0; i < 6; i++) otp[i] = text[i] ?? '';
 		otpRefs[Math.min(text.length, 5)]?.focus();
-	}
-
-	function completeVerification() {
-		view = 'personal-details';
 	}
 
 	function goToSignup() {
@@ -228,6 +331,17 @@
 		<h2 id="auth-modal-title" class={headingClass}>{title}</h2>
 		<p class={subtitleClass}>{@render subtitle()}</p>
 	</div>
+{/snippet}
+
+{#snippet errorBanner()}
+	{#if error}
+		<div
+			role="alert"
+			class="border-error-200 dark:text-error-400 w-full rounded-xl border bg-error-50 px-4 py-2.5 text-theme-sm text-error-600 dark:border-error-500/30 dark:bg-error-500/10"
+		>
+			{error}
+		</div>
+	{/if}
 {/snippet}
 
 {#snippet otpInputs()}
@@ -372,23 +486,29 @@
 						{#snippet loginSub()}Log in to your account{/snippet}
 
 						<div class="flex w-full flex-col items-center gap-5">
-							<form
-								class="flex w-full flex-col gap-4"
-								onsubmit={(e) => {
-									e.preventDefault();
-									view = 'email-form';
-								}}
-							>
+							<form class="flex w-full flex-col gap-4" onsubmit={handleLogin}>
+								{@render errorBanner()}
 								<label class="flex w-full flex-col gap-1.5">
 									<span class={labelClass}>Email</span>
 									<input
 										type="email"
+										required
 										bind:value={email}
 										placeholder="info@gmail.com"
 										class={inputClass}
 									/>
 								</label>
-								<button type="submit" class={primaryBtnClass}>Continue with email</button>
+								{@render passwordField({
+									label: 'Password',
+									value: password,
+									onUpdate: (v) => (password = v),
+									show: showPassword,
+									onToggleShow: () => (showPassword = !showPassword),
+									placeholder: 'Enter your password'
+								})}
+								<button type="submit" disabled={submitting} class={primaryBtnClass}>
+									{submitting ? 'Signing in…' : 'Sign in'}
+								</button>
 							</form>
 
 							{@render orDivider()}
@@ -404,13 +524,8 @@
 							Enter your email and create a password
 						{/snippet}
 
-						<form
-							class="flex w-full flex-col gap-7"
-							onsubmit={(e) => {
-								e.preventDefault();
-								view = 'email-verify';
-							}}
-						>
+						<form class="flex w-full flex-col gap-7" onsubmit={handleSignup}>
+							{@render errorBanner()}
 							<div class="flex flex-col gap-4">
 								<label class="flex w-full flex-col gap-1.5">
 									<span class={labelClass}>Email<span class="text-error-500">*</span></span>
@@ -429,7 +544,7 @@
 									show: showPassword,
 									onToggleShow: () => (showPassword = !showPassword),
 									placeholder: 'Create a password',
-									hint: 'Must be at least 8 characters.',
+									hint: 'Min 8 chars with upper, lower, and a number.',
 									minlength: 8
 								})}
 								{@render passwordField({
@@ -441,7 +556,9 @@
 									placeholder: 'Re-enter your password'
 								})}
 							</div>
-							<button type="submit" class={primaryBtnClass}>Continue</button>
+							<button type="submit" disabled={submitting} class={primaryBtnClass}>
+								{submitting ? 'Creating account…' : 'Continue'}
+							</button>
 						</form>
 
 						{@render backLink('Back to log in', goToLogin)}
@@ -456,18 +573,20 @@
 							>
 						{/snippet}
 
-						<form
-							class="flex w-full flex-col gap-7"
-							onsubmit={(e) => {
-								e.preventDefault();
-								completeVerification();
-							}}
-						>
+						<form class="flex w-full flex-col gap-7" onsubmit={handleVerify}>
+							{@render errorBanner()}
 							{@render otpInputs()}
-							<button type="submit" class={primaryBtnClass}>Verify email</button>
+							<p class={hintClass}>
+								Email isn't sent in this template — use <span
+									class="font-mono font-medium text-gray-700 dark:text-gray-300">000000</span
+								> to verify.
+							</p>
+							<button type="submit" disabled={submitting} class={primaryBtnClass}>
+								{submitting ? 'Verifying…' : 'Verify email'}
+							</button>
 						</form>
 
-						{@render inlinePrompt("Didn't receive the email?", 'Click to resend', () => {})}
+						{@render inlinePrompt("Didn't receive the email?", 'Click to resend', handleResendOtp)}
 
 						{@render backLink('Back to log in', goToLogin)}
 					</div>
@@ -478,24 +597,31 @@
 							This helps us personalize your experience
 						{/snippet}
 
-						<form
-							class="flex w-full flex-col gap-7"
-							onsubmit={(e) => {
-								e.preventDefault();
-								view = 'preferences';
-							}}
-						>
+						<form class="flex w-full flex-col gap-7" onsubmit={handlePersonalDetails}>
+							{@render errorBanner()}
 							<div class="flex flex-col gap-4">
-								<label class="flex w-full flex-col gap-1.5">
-									<span class={labelClass}>Full name<span class="text-error-500">*</span></span>
-									<input
-										type="text"
-										required
-										bind:value={fullName}
-										placeholder="Enter your full name"
-										class={inputClass}
-									/>
-								</label>
+								<div class="flex gap-3">
+									<label class="flex flex-1 flex-col gap-1.5">
+										<span class={labelClass}>First name<span class="text-error-500">*</span></span>
+										<input
+											type="text"
+											required
+											bind:value={firstName}
+											placeholder="First name"
+											class={inputClass}
+										/>
+									</label>
+									<label class="flex flex-1 flex-col gap-1.5">
+										<span class={labelClass}>Last name<span class="text-error-500">*</span></span>
+										<input
+											type="text"
+											required
+											bind:value={lastName}
+											placeholder="Last name"
+											class={inputClass}
+										/>
+									</label>
+								</div>
 								<label class="flex w-full flex-col gap-1.5">
 									<span class={labelClass}>Date of birth</span>
 									<input type="date" bind:value={dateOfBirth} class={inputClass} />
@@ -504,7 +630,9 @@
 									>
 								</label>
 							</div>
-							<button type="submit" class={primaryBtnClass}>Continue</button>
+							<button type="submit" disabled={submitting} class={primaryBtnClass}>
+								{submitting ? 'Saving…' : 'Continue'}
+							</button>
 						</form>
 
 						{@render backLink('Back', () => (view = 'email-verify'))}
@@ -516,13 +644,8 @@
 							Customize your experience. You can change these anytime.
 						{/snippet}
 
-						<form
-							class="flex w-full flex-col gap-7"
-							onsubmit={(e) => {
-								e.preventDefault();
-								view = 'welcome';
-							}}
-						>
+						<form class="flex w-full flex-col gap-7" onsubmit={handlePreferences}>
+							{@render errorBanner()}
 							<div class="flex flex-col gap-4">
 								<label class="flex w-full flex-col gap-1.5">
 									<span class={labelClass}>Default currency</span>
@@ -560,9 +683,9 @@
 					</div>
 				{:else if view === 'welcome'}
 					<div class="flex w-full flex-col items-center gap-7">
-						{@render viewHeader(`Welcome ${fullName.split(' ')[0] || 'there'}`, welcomeSub)}
+						{@render viewHeader(`Welcome ${firstName || 'there'}`, welcomeSub)}
 						{#snippet welcomeSub()}
-							Your account has been successfully created. A confirmation email has been sent to
+							Your account has been created and signed in as
 							<span class="font-medium text-gray-800 dark:text-white/90"
 								>{email || 'your email'}</span
 							>.

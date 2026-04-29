@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { isBranchActive, isLinkActive, type NavBranch } from '$lib/data/nav';
 	import { sidebar } from '$lib/stores/sidebar.svelte';
 	import SidebarIcon from './SidebarIcon.svelte';
@@ -68,7 +69,7 @@
 				{@const leafActive = isLinkActive(child.href, pathname)}
 				<li>
 					<a
-						href={child.href}
+						href={resolve(child.href as '/console')}
 						class="group menu-dropdown-item {leafActive
 							? 'menu-dropdown-item-active'
 							: 'menu-dropdown-item-inactive'}"

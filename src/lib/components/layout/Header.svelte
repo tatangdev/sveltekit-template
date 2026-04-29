@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
 	import { clickOutside } from '$lib/actions/clickOutside';
 	import Dropdown from '$lib/components/ui/Dropdown.svelte';
 	import ChevronDownIcon from '$lib/components/ui/icons/ChevronDownIcon.svelte';
@@ -89,7 +90,7 @@
 				<CloseIcon class="fill-current {sidebar.toggle ? 'block xl:hidden' : 'hidden'}" />
 			</button>
 
-			<a href="/console" class="xl:hidden">
+			<a href={resolve('/console')} class="xl:hidden">
 				<img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
 				<img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
 			</a>
@@ -244,7 +245,7 @@
 								<li>
 									<a
 										class="flex gap-3 rounded-xl border-b border-gray-100 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
-										href="."
+										href={resolve('/console')}
 									>
 										<span class="relative z-1 block h-10 w-full max-w-10 rounded-full">
 											<img src={n.avatar} alt={n.user} class="overflow-hidden rounded-full" />
@@ -277,7 +278,7 @@
 						</ul>
 
 						<a
-							href="."
+							href={resolve('/console')}
 							class="mt-3 flex justify-center rounded-xl border border-gray-300 bg-white p-3 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200"
 						>
 							View All Notification
@@ -324,7 +325,7 @@
 					<ul class="flex flex-col gap-1 border-b border-gray-200 pt-4 pb-3 dark:border-gray-800">
 						<li>
 							<a
-								href="/console/profile"
+								href={resolve('/console/profile')}
 								class="group flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 							>
 								<svg
@@ -348,7 +349,7 @@
 						</li>
 						<li>
 							<a
-								href="/console/settings"
+								href={resolve('/console/settings')}
 								class="group flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 							>
 								<svg
@@ -372,7 +373,7 @@
 						</li>
 						<li>
 							<a
-								href="/console/support"
+								href={resolve('/console/support')}
 								class="group flex items-center gap-3 rounded-xl px-3 py-2 text-theme-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 							>
 								<svg

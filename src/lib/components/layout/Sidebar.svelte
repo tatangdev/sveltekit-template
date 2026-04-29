@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 	import { isBranch, isBranchActive, NAV } from '$lib/data/nav';
 	import { persisted } from '$lib/stores/persisted.svelte';
 	import { sidebar } from '$lib/stores/sidebar.svelte';
@@ -35,7 +36,7 @@
 			? 'justify-center'
 			: 'justify-between'}"
 	>
-		<a href="/console">
+		<a href={resolve('/console')}>
 			<span class="logo {sidebar.toggle ? 'hidden' : ''}">
 				<img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
 				<img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />

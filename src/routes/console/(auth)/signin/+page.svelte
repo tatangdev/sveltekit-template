@@ -1,9 +1,35 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { ApiError } from '$lib/api/client';
 	import CommonGridShape from '$lib/components/ui/CommonGridShape.svelte';
+	import { auth } from '$lib/stores/auth.svelte';
 
+	let email = $state('');
+	let password = $state('');
 	let showPassword = $state(false);
 	let keepLoggedIn = $state(false);
+	let submitting = $state(false);
+	let error = $state<string | null>(null);
+
+	async function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		error = null;
+		submitting = true;
+		try {
+			await auth.login(email, password);
+			await goto(resolve('/console'));
+		} catch (err) {
+			error =
+				err instanceof ApiError
+					? err.message
+					: err instanceof Error
+						? err.message
+						: 'Failed to sign in.';
+		} finally {
+			submitting = false;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -124,8 +150,16 @@
 								<span class="bg-white p-2 text-gray-400 sm:px-5 sm:py-2 dark:bg-gray-900">Or</span>
 							</div>
 						</div>
-						<form>
+						<form onsubmit={handleSubmit}>
 							<div class="space-y-5">
+								{#if error}
+									<div
+										role="alert"
+										class="border-error-200 dark:text-error-400 rounded-xl border bg-error-50 px-4 py-2.5 text-sm text-error-600 dark:border-error-500/30 dark:bg-error-500/10"
+									>
+										{error}
+									</div>
+								{/if}
 								<div>
 									<label
 										for="email"
@@ -137,6 +171,8 @@
 										type="email"
 										id="email"
 										name="email"
+										required
+										bind:value={email}
 										placeholder="info@gmail.com"
 										class="h-11 w-full rounded-xl border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
 									/>
@@ -152,6 +188,8 @@
 										<input
 											id="password"
 											type={showPassword ? 'text' : 'password'}
+											required
+											bind:value={password}
 											placeholder="Enter your password"
 											class="h-11 w-full rounded-xl border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
 										/>
@@ -245,9 +283,11 @@
 								</div>
 								<div>
 									<button
-										class="flex w-full items-center justify-center rounded-xl bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs transition hover:bg-brand-600"
+										type="submit"
+										disabled={submitting}
+										class="flex w-full items-center justify-center rounded-xl bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs transition hover:bg-brand-600 disabled:opacity-60"
 									>
-										Sign In
+										{submitting ? 'Signing in…' : 'Sign In'}
 									</button>
 								</div>
 							</div>

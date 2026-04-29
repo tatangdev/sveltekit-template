@@ -91,7 +91,23 @@ The modal accepts an `initialView` prop and resets internal state inside the `$e
 
 ## Icons
 
-Inline SVGs everywhere. Reusable ones live in [`$lib/components/ui/icons/`](src/lib/components/ui/icons/) (`SunIcon`, `MoonIcon`, `CloseIcon`, `ChevronDownIcon`). One-offs are inlined in markup (search glyph, hamburger, social brand marks). When an SVG path has `fill="currentColor"`, set color via `text-*` on the SVG element, not `fill-*` — the latter doesn't cascade through the path's explicit attribute.
+**One source of truth per glyph.** If an SVG is used in 2+ files, extract it to [`$lib/components/ui/icons/<Name>.svelte`](src/lib/components/ui/icons/) and `<Name />` from both places. Pasting the same path data twice is how icons drift (e.g. truncated subpaths, mismatched stroke widths).
+
+Existing extracted icons: `SunIcon`, `MoonIcon`, `CloseIcon`, `ChevronDownIcon`, `ChevronLeftIcon`, `EyeOpenIcon`, `EyeClosedIcon`, `GoogleLogo`, `FacebookLogo`, `AppleLogo`. Truly single-use icons stay inline (search glyph in `Header`, hamburger, social marks in `Footer`, sidebar nav-group dots, menu glyphs) — extraction adds files for no benefit.
+
+Component shape — accept a `class` prop with a sensible default and render the SVG:
+
+```svelte
+<script lang="ts">
+	let { class: className = 'fill-current' }: { class?: string } = $props();
+</script>
+
+<svg class={className} width="20" height="20" viewBox="0 0 20 20" ...>
+	<path d="..." fill="currentColor" />
+</svg>
+```
+
+When an SVG path has `fill="currentColor"`, set color via `text-*` on the SVG element, not `fill-*` — the latter doesn't cascade through the path's explicit attribute.
 
 ## Scripts
 

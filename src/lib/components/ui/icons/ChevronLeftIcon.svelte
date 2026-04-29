@@ -1,0 +1,21 @@
+<script lang="ts">
+	let { class: className = 'stroke-current' }: { class?: string } = $props();
+</script>
+
+<svg
+	class={className}
+	width="20"
+	height="20"
+	viewBox="0 0 20 20"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+	aria-hidden="true"
+>
+	<path
+		d="M12.7083 5L7.5 10.2083L12.7083 15.4167"
+		stroke="currentColor"
+		stroke-width="1.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+</svg>

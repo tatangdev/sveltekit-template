@@ -3,12 +3,23 @@ import { persisted } from './persisted.svelte';
 
 const stored = persisted<boolean>('darkMode', false);
 
-function syncDom() {
+function applyDarkClass() {
 	if (!browser) return;
 	document.documentElement.classList.toggle('dark', stored.value);
 }
 
-if (browser) syncDom();
+// Suppress hover transitions during the toggle so the whole page flips at once.
+function applyDarkClassWithoutTransitions() {
+	if (!browser) return;
+	document.documentElement.classList.add('no-transitions');
+	applyDarkClass();
+	void document.documentElement.offsetHeight; // force reflow
+	requestAnimationFrame(() => {
+		document.documentElement.classList.remove('no-transitions');
+	});
+}
+
+if (browser) applyDarkClass();
 
 export const theme = {
 	get dark() {
@@ -16,10 +27,10 @@ export const theme = {
 	},
 	set dark(next: boolean) {
 		stored.value = next;
-		syncDom();
+		applyDarkClassWithoutTransitions();
 	},
 	toggle() {
 		stored.value = !stored.value;
-		syncDom();
+		applyDarkClassWithoutTransitions();
 	}
 };
